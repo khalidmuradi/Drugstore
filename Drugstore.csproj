@@ -1,11 +1,80 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <TargetFramework>net8.0-windows</TargetFramework>
-    <Nullable>enable</Nullable>
+    <!-- Target the .NET Framework 4.7.2 for compatibility with existing packages -->
+    <TargetFramework>net472</TargetFramework>
     <UseWindowsForms>true</UseWindowsForms>
-    <ImplicitUsings>enable</ImplicitUsings>
+    <!-- When targeting .NET Framework with SDK-style, disable auto assembly info generation
+         if the project contains AssemblyInfo or other attributes to avoid duplicates. -->
+    <GenerateAssemblyInfo>True</GenerateAssemblyInfo>
+    <!-- Prevent SDK from auto-generating the TargetFrameworkAttribute when targeting .NET Framework -->
+    <GenerateTargetFrameworkAttribute>false</GenerateTargetFrameworkAttribute>
+    <StartupObject>DrugstoreManagement.Program</StartupObject>
+    <AssemblyName>$(DrugStoreManagement)</AssemblyName>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <SignAssembly>False</SignAssembly>
+    <PackageId>$(DrugStoreManagement)</PackageId>
+    <Title>DrugStore Management</Title>
+    <Version>$(DS M)</Version>
+    <NuGetAudit>True</NuGetAudit>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <Optimize>True</Optimize>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoFixture.NUnit3" Version="4.18.1" />
+    <PackageReference Include="ClosedXML" Version="0.105.0" />
+    <PackageReference Include="EPPlus" Version="8.1.1" />
+    <PackageReference Include="FluentAssertions" Version="8.6.0" />
+    <PackageReference Include="iTextSharp" Version="5.5.13.4" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.14.1" />
+    <PackageReference Include="Microsoft.OpenApi" Version="2.3.1" />
+    <PackageReference Include="Microsoft.SCP.Net.Test.SDK" Version="0.9.4.233" />
+    <PackageReference Include="Microsoft.SqlServer.Types" Version="160.1000.6" />
+    <PackageReference Include="Microsoft.VisualBasic" Version="10.3.0" />
+    <PackageReference Include="Microsoft.Office.Interop.Excel" Version="15.0.4795.1001" />
+    <PackageReference Include="Microsoft.Bot.Builder.Dialogs" Version="4.23.0" />
+    <PackageReference Include="Microsoft.Bot.Streaming" Version="4.23.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="9.0.9" />
+    <PackageReference Include="Microsoft.ReportingServices.ReportViewerControl.Winforms" Version="150.1652.0" />
+    <PackageReference Include="Microsoft.Windows.SDK.Contracts" Version="10.0.26100.4948" />
+    <PackageReference Include="NetOffice.Core" Version="1.7.4.11" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageReference Include="Newtonsoft.Json.Bson" Version="1.0.3" />
+    <PackageReference Include="NUnit" Version="3.12.0" />
+    <PackageReference Include="NUnit.Console" Version="3.20.1" />
+    <PackageReference Include="NUnit.Engine" Version="3.20.1" />
+    <PackageReference Include="NUnit.Engine.Api" Version="3.20.1" />
+    <PackageReference Include="NUnit.Extension.NUnitProjectLoader" Version="3.8.0" />
+    <PackageReference Include="NUnit.Extension.NUnitV2ResultWriter" Version="3.8.0" />
+    <PackageReference Include="NUnit.Extension.TeamCityEventListener" Version="1.0.10" />
+    <PackageReference Include="NUnit.Extension.VSProjectLoader" Version="3.9.0" />
+    <PackageReference Include="NUnit.Runners" Version="3.12.0" />
+    <PackageReference Include="NUnit3TestAdapter" Version="5.1.0" />
+    <PackageReference Include="OpenAI" Version="2.4.0" />
+    <PackageReference Include="System.Text.Json" Version="9.0.9" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Properties\Settings.Designer.cs">
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+
+  <!-- Exclude runner project sources (subfolder) from the main project's compile items.
+       SDK-style projects auto-include source files in subfolders; the runner is its own project
+       and must not be compiled into the main assembly. -->
+   
 </Project>
